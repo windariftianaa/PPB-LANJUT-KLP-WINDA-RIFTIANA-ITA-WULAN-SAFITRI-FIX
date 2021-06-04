@@ -17,4 +17,13 @@
         <item name="android:colorButtonNormal">@color/bg_primary</item>
 
     </style>
+
+    <style name="Theme.MIBU.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MIBU.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MIBU.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.klp_wita.mibu">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,18 +11,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MIBU">
-        <activity android:name=".ui.MainActivity">
+        <activity
+            android:name=".ui.FruitDetailActivity"
+            android:label="@string/title_activity_fruit_detail"
+            android:theme="@style/Theme.MIBU.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
+        <activity android:name=".ui.ForgotPasswordActivity" />
+        <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.RegisterActivity" />
-        <activity android:name=".ui.LoginActivity"></activity>
-        <activity android:name=".ui.SplashScreen">
+        <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.SplashScreen" />
 
         <meta-data
             android:name="preloaded_fonts"

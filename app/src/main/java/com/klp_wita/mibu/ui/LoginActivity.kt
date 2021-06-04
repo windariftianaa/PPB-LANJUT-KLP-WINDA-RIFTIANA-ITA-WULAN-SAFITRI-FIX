@@ -28,12 +28,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener{
         startActivity(intent)
     }
 
+    public fun goForgotPasswordPage(v: View){
+        val intent = Intent(this,ForgotPasswordActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onClick(v: View) {
         when (v.id){
             R.id.btn_login -> {
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
             }
+
+
         }
     }
 
