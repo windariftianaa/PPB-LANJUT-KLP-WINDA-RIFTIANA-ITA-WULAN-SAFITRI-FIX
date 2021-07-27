@@ -23,12 +23,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener{
     }
 
 
-    public fun goRegisterPage(v: View){
+    public fun goRegisterPage(){
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
 
-    public fun goForgotPasswordPage(v: View){
+    public fun goForgotPasswordPage(){
         val intent = Intent(this,ForgotPasswordActivity::class.java)
         startActivity(intent)
     }

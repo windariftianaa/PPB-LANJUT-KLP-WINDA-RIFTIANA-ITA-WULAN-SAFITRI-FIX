@@ -2,12 +2,16 @@ package com.klp_wita.mibu.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.klp_wita.mibu.R
+import com.klp_wita.mibu.ui.Profile.ProfileChangeFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,4 +28,18 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
+    fun switchFragment(fragment: Fragment, addToBackstack: Boolean){
+
+        val mFragment = supportFragmentManager.fragments.lastOrNull()
+        if (mFragment != null && fragment::class == mFragment::class) {
+            return
+        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.FRProfileDetailInfo, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+
 }

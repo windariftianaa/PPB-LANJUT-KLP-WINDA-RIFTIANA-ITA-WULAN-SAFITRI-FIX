@@ -13,9 +13,11 @@ import com.klp_wita.mibu.R
 import com.klp_wita.mibu.databinding.RvItemListHomeBinding
 import com.klp_wita.mibu.model.FruitListData
 import com.klp_wita.mibu.ui.Home.HomeViewModel
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 
-class HomeAdapter(val viewModel: HomeViewModel,val fruitListData: List<FruitListData>,val context: Context):
+class HomeAdapter(val fruitListData: List<FruitListData>, val itemLayout:Int):
     RecyclerView.Adapter<HomeAdapter.FruitListViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -26,25 +28,26 @@ class HomeAdapter(val viewModel: HomeViewModel,val fruitListData: List<FruitList
 
     }
 
-
-
     override fun onBindViewHolder(holder: FruitListViewHolder, position: Int) {
         holder.bind(fruitListData.get(position))
     }
 
-
-
-
     override fun getItemCount(): Int = fruitListData.size
 
+    fun nFormatter(n:Int):String{
+        val dec = DecimalFormat("#,###")
+
+        return dec.format(n).toString()
+    }
 
     inner class FruitListViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         private val binding = RvItemListHomeBinding.bind(itemView)
+
         fun bind(fruitListData: FruitListData){
-            binding.tvFruitPrice.text = "Rp."+fruitListData.price.toString()
-            binding.tvFruitName.text = fruitListData.name
+            binding.tvFruitPrice.text = "Rp."+nFormatter(fruitListData.price)
+            binding.tvFruitName.text = fruitListData.fruit_name.toString()
             Glide.with(itemView.context)
-                .load(fruitListData.pictureURL)
+                .load(fruitListData.photo_url)
                 .apply(RequestOptions().override(100,100))
                 .into(binding.imageViewFruitPhoto)
         }

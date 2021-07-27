@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.klp_wita.mibu.R
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), View.OnClickListener {
 
     companion object {
         fun newInstance() = ProfileFragment()
@@ -26,7 +26,10 @@ class ProfileFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        // TODO: Use the ViewModel
+    }
+
+    override fun onClick(v: View) {
+        TODO("Not yet implemented")
     }
 
 }
