@@ -33,27 +33,87 @@ class HomeViewModel() : ViewModel() {
         var sayurFruitCollection = firestore.collection("fruit_list").whereEqualTo("category",3)
 
         localFruitCollection.addSnapshotListener { value, error ->
-            var innerfruitdata = value?.toObjects(FruitListData::class.java)
-            _localFruit.postValue(innerfruitdata)
+            if(error!=null){
+                Log.d(TAG,"Listen Failed",error)
+                return@addSnapshotListener
+            }
+            if(value!=null){
+                val localFruit = ArrayList<FruitListData>()
+                val doc = value.documents
+                doc.forEach {
+                    val fr = it.toObject(FruitListData::class.java)
+                    if(fr!=null){
+                        fr.id = it.id
+                        localFruit.add(fr!!)
+                    }
+                }
+                _localFruit.value = localFruit
+            }
         }
 
         importFruitCollection.addSnapshotListener { value, error ->
-            var innerfruitdata = value?.toObjects(FruitListData::class.java)
-            _importFruit.postValue(innerfruitdata)
+            if(error!=null){
+                Log.d(TAG,"Listen Failed",error)
+                return@addSnapshotListener
+            }
+            if(value!=null){
+                val importFruit = ArrayList<FruitListData>()
+                val doc = value.documents
+
+                doc.forEach {
+                    val fr = it.toObject(FruitListData::class.java)
+                    if(fr!=null){
+                        fr.id = it.id
+                        importFruit.add(fr!!)
+                    }
+                }
+                _importFruit.value = importFruit
+            }
         }
 
         sayurFruitCollection.addSnapshotListener { value, error ->
-            var innerfruitdata = value?.toObjects(FruitListData::class.java)
-            _sayurFruit.postValue(innerfruitdata)
+            if(error!=null){
+                Log.d(TAG,"Listen Failed",error)
+                return@addSnapshotListener
+            }
+            if(value!=null){
+                val sayurFruit = ArrayList<FruitListData>()
+                val doc = value.documents
+
+                doc.forEach {
+                    val fr = it.toObject(FruitListData::class.java)
+                    if(fr!=null){
+                        fr.id = it.id
+                        sayurFruit.add(fr!!)
+                    }
+                }
+                _sayurFruit.value = sayurFruit
+            }
         }
+
     }
 
     fun fetchFruit(){
         var fruitCollection = firestore.collection("fruit_list")
 
         fruitCollection.addSnapshotListener { value, error ->
-            var innerfruitdata = value?.toObjects(FruitListData::class.java)
-            _fruitlist.postValue(innerfruitdata)
+            if(error!=null){
+                Log.d(TAG,"Listen Failed",error)
+                return@addSnapshotListener
+            }
+            if(value!=null){
+                val fruitList = ArrayList<FruitListData>()
+                val doc = value.documents
+
+                doc.forEach {
+                    val fr = it.toObject(FruitListData::class.java)
+                    if(fr!=null){
+                        fr.id = it.id
+                        fruitList.add(fr!!)
+                    }
+                }
+                _fruitlist.value = fruitList
+            }
         }
     }
 

@@ -37,10 +37,10 @@ class HomeFragment : Fragment() {
 
     binding = FragmentHomeBinding.inflate(inflater,container,false)
     val view = binding.root
+
     factory = HomeViewModelFactory()
     homeViewModel = ViewModelProvider(this,factory).get(HomeViewModel::class.java)
     homeViewModel.fetchCategorizedFruit()
-
     mRecyclerViewLocal = binding.fruitrecyclerviewLocal
     mRecyclerViewLocal.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
     mRecyclerViewLocal.setNestedScrollingEnabled(false);

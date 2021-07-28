@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toolbar
+import androidx.appcompat.app.ActionBar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,6 +40,8 @@ class BuyFragment : Fragment() {
 
         binding = BuyFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
+        activity?.actionBar?.setDisplayHomeAsUpEnabled(false)
+
         factory = HomeViewModelFactory()
         homeViewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
         homeViewModel.fetchCategorizedFruit()
@@ -70,25 +74,18 @@ class BuyFragment : Fragment() {
             _fruitlistLocal.removeAll(_fruitlistLocal)
             _fruitlistLocal.addAll(fruitlistl)
             mRecyclerViewLocal.adapter!!.notifyDataSetChanged()
-
         })
 
         homeViewModel.importFruit.observe(viewLifecycleOwner, Observer { fruitlisti ->
             _fruitlistImport.removeAll(_fruitlistImport)
             _fruitlistImport.addAll(fruitlisti)
             mRecyclerViewImport.adapter!!.notifyDataSetChanged()
-            Log.d("Buah", fruitlisti.toString())
-
-
         })
 
         homeViewModel.sayurFruit.observe(viewLifecycleOwner, Observer { fruitlists ->
             _fruitlistSayur.removeAll(_fruitlistSayur)
             _fruitlistSayur.addAll(fruitlists)
             mRecyclerViewVegetable.adapter!!.notifyDataSetChanged()
-            Log.d("Buah", fruitlists.toString())
-
-
         })
 
 
