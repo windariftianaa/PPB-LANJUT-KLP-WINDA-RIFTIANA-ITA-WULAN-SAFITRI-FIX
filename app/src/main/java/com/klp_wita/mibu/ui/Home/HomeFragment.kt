@@ -67,7 +67,6 @@ class HomeFragment : Fragment() {
       _fruitlistImport.removeAll(_fruitlistImport)
       _fruitlistImport.addAll(fruitlisti)
       mRecyclerViewImport.adapter!!.notifyDataSetChanged()
-      Log.d("Buah",fruitlisti.toString())
 
 
     })
@@ -76,8 +75,6 @@ class HomeFragment : Fragment() {
       _fruitlistSayur.removeAll(_fruitlistSayur)
       _fruitlistSayur.addAll(fruitlists)
       mRecyclerViewVegetable.adapter!!.notifyDataSetChanged()
-      Log.d("Buah",fruitlists.toString())
-
 
     })
 

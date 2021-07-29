@@ -31,7 +31,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.Profile.MapsActivity"
+            android:name=".ui.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
         <activity android:name=".ui.PlaceOrder.PlaceOrderActivity"></activity>
         <activity
@@ -46,8 +46,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.RegisterActivity" />
-        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.RegisterActivity">
+
+        </activity>
+        <activity android:name=".ui.LoginActivity">
+
+        </activity>
         <activity android:name=".ui.SplashScreen" />
 
         <meta-data

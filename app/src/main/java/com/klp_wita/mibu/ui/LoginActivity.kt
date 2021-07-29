@@ -6,19 +6,30 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.viewbinding.ViewBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.klp_wita.mibu.R
 import com.klp_wita.mibu.databinding.ActivityLoginBinding
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener{
+class LoginActivity : AppCompatActivity(){
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var auth:FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         supportActionBar?.hide()
-
-        binding.btnLogin.setOnClickListener(this)
+        auth = FirebaseAuth.getInstance()
+        binding.btnLogin.setOnClickListener{
+            login()
+        }
+        binding.registerBtn.setOnClickListener {
+            goRegisterPage()
+        }
+        binding.tbForgotPassword.setOnClickListener {
+            goForgotPasswordPage()
+        }
 
     }
 
@@ -33,14 +44,37 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener{
         startActivity(intent)
     }
 
-    override fun onClick(v: View) {
-        when (v.id){
-            R.id.btn_login -> {
-                val intent = Intent(this,MainActivity::class.java)
-                startActivity(intent)
+
+
+    private fun login(){
+        val edtPasswod = binding.tiLoginPassword.text.toString().trim()
+        val edtEmail = binding.tiLoginEmail.text.toString().trim()
+
+        if(edtEmail.isEmpty()||edtPasswod.isEmpty()||edtPasswod.length<6){
+            if(edtEmail.isEmpty()){
+                binding.emailEditText.error = "Email harus diisi"
             }
+            if(edtPasswod.isEmpty()){
+                binding.passwordEditText.error = "Password harus diisi"
+            }
+            if(edtPasswod.length<6){
+                binding.passwordEditText.error = "Password minimal 6 karakter"
+            }
+            return
+        }else{
 
+            auth.signInWithEmailAndPassword(edtEmail,edtPasswod)
+                .addOnCompleteListener { task ->
+                    if(task.isSuccessful){
+                        val user = auth.currentUser
+                        user?.sendEmailVerification()
+                        val intent = Intent(this,MainActivity::class.java)
+                        startActivity(intent)
+                    }else{
 
+                        binding.passwordEditText.error = "Email atau Password salah"
+                    }
+                }
         }
     }
 

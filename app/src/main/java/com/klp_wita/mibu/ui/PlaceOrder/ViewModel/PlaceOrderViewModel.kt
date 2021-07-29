@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.klp_wita.mibu.model.FruitListData
@@ -15,6 +16,7 @@ class PlaceOrderViewModel(): ViewModel() {
     private lateinit var firestore: FirebaseFirestore
     var _itemData = MutableLiveData<List<FruitListData>>()
     val shippingcharge = 20000
+    private lateinit var mAuth: FirebaseAuth
     val itemprice = MutableLiveData<Int>().apply {
         value = 0
     }
@@ -42,9 +44,18 @@ class PlaceOrderViewModel(): ViewModel() {
         value = ""
     }
 
+    val currentName = MutableLiveData<String>().apply {
+        value = ""
+    }
+
+    val currentAddress = MutableLiveData<String>().apply {
+        value = ""
+    }
+
     init {
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+        mAuth = FirebaseAuth.getInstance()
     }
 
     fun initCart(id:String){
@@ -67,6 +78,20 @@ class PlaceOrderViewModel(): ViewModel() {
                 }
 
                 _itemData.value = item
+            }
+
+        firestore.collection("user_details")
+            .document(mAuth.currentUser?.uid.toString())
+            .get()
+            .addOnSuccessListener { a ->
+                currentAddress.value?.let{
+                    currentAddress.value = a.get("address").toString()
+                }
+
+                currentName.value?.let {
+                    currentName.value = a.get("name").toString()
+                }
+
             }
 
     }

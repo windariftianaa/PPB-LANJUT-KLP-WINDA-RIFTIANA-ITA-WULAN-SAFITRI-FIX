@@ -101,6 +101,14 @@ class PlaceOrderFragment : Fragment() {
                 .centerCrop()
                 .into(binding.ivPlaceorderFrimage)
         })
+
+        viewmodel.currentName.observe(viewLifecycleOwner, Observer {
+            binding.edtPlaceorderFullname.setText(it.toString())
+        })
+
+        viewmodel.currentAddress.observe(viewLifecycleOwner, Observer {
+            binding.edtPlaceorderAddress.setText(it.toString())
+        })
     }
 
     fun nFormatter(n:Int):String{

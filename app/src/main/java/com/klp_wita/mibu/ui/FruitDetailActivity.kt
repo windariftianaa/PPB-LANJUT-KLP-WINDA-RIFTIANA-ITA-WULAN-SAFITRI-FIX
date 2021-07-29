@@ -8,7 +8,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.klp_wita.mibu.R
 import com.klp_wita.mibu.databinding.ActivityFruitDetailBinding
 import com.klp_wita.mibu.ui.PlaceOrder.PlaceOrderActivity
-import com.klp_wita.mibu.ui.Profile.MapsActivity
 import java.text.DecimalFormat
 
 class FruitDetailActivity : AppCompatActivity() {
@@ -30,12 +29,10 @@ class FruitDetailActivity : AppCompatActivity() {
         }
         binding.toolbarLayout.title = title
         binding.fab.setOnClickListener { view ->
-            val intent = Intent(this,MapsActivity::class.java)
+            val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
-
         updateUI()
-
         binding.btnBuy.setOnClickListener {
             val i = Intent(this, PlaceOrderActivity::class.java)
             i.putExtra("EXTRA_ITEM_ID",intent.getStringExtra("EXTRA_ITEM_ID").toString())
@@ -44,12 +41,10 @@ class FruitDetailActivity : AppCompatActivity() {
 
 
     }
-
     fun nFormatter(n:Int):String{
         val dec = DecimalFormat("#,###")
         return dec.format(n).toString()
     }
-
     private fun updateUI(){
         val itemid = intent.getStringExtra("EXTRA_ITEM_ID").toString()
         firestore.collection("fruit_list").document(itemid)

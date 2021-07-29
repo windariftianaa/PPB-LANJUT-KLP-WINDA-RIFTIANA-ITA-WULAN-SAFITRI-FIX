@@ -1,4 +1,4 @@
-package com.klp_wita.mibu.ui.Profile
+package com.klp_wita.mibu.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -56,6 +56,7 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ti_login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -72,6 +73,7 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ti_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -83,7 +85,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:onClick="goForgotPasswordPage"
             android:text="Lupa Password ?"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#858585" />
@@ -118,7 +119,6 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:text="Register"
-                android:onClick="goRegisterPage"
                 android:textColor="#575757" />
 
         </LinearLayout>

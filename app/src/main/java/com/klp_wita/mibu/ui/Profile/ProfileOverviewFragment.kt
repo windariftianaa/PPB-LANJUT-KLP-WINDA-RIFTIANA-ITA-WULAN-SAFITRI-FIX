@@ -2,55 +2,68 @@ package com.klp_wita.mibu.ui.Profile
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.klp_wita.mibu.R
+import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.klp_wita.mibu.databinding.FragmentProfileOverviewBinding
+import com.klp_wita.mibu.ui.Modal.DialogModalFragment
 import com.klp_wita.mibu.ui.MainActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileOverviewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProfileOverviewFragment : Fragment(), View.OnClickListener {
-    private lateinit var binding:FragmentProfileOverviewBinding
-
+class ProfileOverviewFragment : Fragment() {
+    private lateinit var binding: FragmentProfileOverviewBinding
+    private lateinit var mAuth:FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentProfileOverviewBinding.inflate(inflater,container,false)
+        binding = FragmentProfileOverviewBinding.inflate(layoutInflater,container,false)
         val view = binding.root
+        mAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+        binding.btnProfileoverviewEdit.setOnClickListener {
+            Log.d("Profile","Clicked")
+            (activity as MainActivity).switchFragment(EditProfileFragment(),false)
+        }
 
+        binding.btnProfileLogout.setOnClickListener(View.OnClickListener {
+            val dialog = DialogModalFragment()
+            dialog.setTargetFragment(this, 1)
+            dialog.show((activity as MainActivity).supportFragmentManager,"MyCustomDialog")
+        })
 
-        binding.btnEditProfile.setOnClickListener(this)
-        binding.btnLogout.setOnClickListener(this)
-
+        updateUI()
         return view
     }
 
-    override fun onClick(v:View) {
-        when(v.id){
-            R.id.btn_edit_profile -> {
-                (context as MainActivity).switchFragment(ProfileChangeFragment(),false)
+    private fun updateUI(){
+        firestore.collection("user_details")
+            .document(mAuth.currentUser?.uid.toString())
+            .get()
+            .addOnSuccessListener {
+                binding.tvOverviewprofileName.setText(it.get("name").toString())
+                binding.tvOverviewprofileEmail.setText(mAuth.currentUser?.email.toString())
+                binding.tvOverviewprofileAddress.setText(it.get("address").toString())
+                binding.tvOverviewprofileHp.setText(it.get("phone").toString())
             }
-            R.id.btn_logout -> {
-                Log.d("Profile","Logout")
-            }
-        }
     }
 
 
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            ProfileOverviewFragment().apply {
+                arguments = Bundle().apply {
+                }
+            }
+    }
 }

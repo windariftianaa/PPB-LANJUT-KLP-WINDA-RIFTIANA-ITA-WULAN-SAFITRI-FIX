@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.klp_wita.mibu.R
+import com.klp_wita.mibu.databinding.ProfileFragmentBinding
+import com.klp_wita.mibu.ui.MainActivity
 
 class ProfileFragment : Fragment(), View.OnClickListener {
+    private lateinit var binding: ProfileFragmentBinding
 
     companion object {
         fun newInstance() = ProfileFragment()
@@ -20,7 +23,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.profile_fragment, container, false)
+        binding = ProfileFragmentBinding.inflate(layoutInflater,container,false)
+        val view = binding.root
+        (activity as MainActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.fr_container_profileDetails,ProfileOverviewFragment())
+            .commit()
+
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
